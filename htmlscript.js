@@ -1,3 +1,12 @@
+/**
+ * [HtmlScript]{@link https://github.com/anarxyfr/htmlscript}
+ *
+ * @version 1.0.0
+ * @author anarxyfr
+ * @copyright anarxyfr 2025
+ * @license MIT
+ */
+
 class HtmlScript {
     constructor() {
         this.scopes = [new Map()];
