@@ -1,0 +1,127 @@
+HtmlScript New Tags Usage Guide
+This guide covers how to use the <json>, <csv>, <ini>, <xml>, <yml> (or <yaml>), and <http> tags in the HtmlScript library.
+Setup
+Include the library in your HTML:
+<script src="https://cdn.jsdelivr.net/gh/Anarxyfr/HtmlScript@main/htmlscript.min.js"></script>
+
+Place tags in the <body>. They process when the page loads.
+New Tags
+<json>
+Parses or stringifies JSON data.
+
+Attributes:
+action: parse (convert JSON string to object) or stringify (convert object to JSON string).
+source (optional): Data to process (defaults to tag content).
+var (optional): Variable to store result.
+
+
+Examples:<!-- Parse JSON string to object -->
+<json action="parse" var="obj">{"key": "value"}</json>
+
+<!-- Stringify object to JSON -->
+<store name="data" value='{"name": "Test"}'></store>
+<json action="stringify" source="data"></json>
+
+
+
+<csv>
+Parses or stringifies CSV data.
+
+Attributes:
+action: parse (convert CSV to array) or stringify (convert array/object to CSV).
+source (optional): Data to process (defaults to tag content).
+var (optional): Variable to store result.
+
+
+Examples:<!-- Parse CSV to array -->
+<csv action="parse" var="rows">name,age\nAlice,30\nBob,25</csv>
+
+<!-- Stringify array to CSV -->
+<store name="data" value="[['name', 'age'], ['Alice', 30]]"></store>
+<csv action="stringify" source="data"></csv>
+
+
+
+<ini>
+Parses or stringifies INI data.
+
+Attributes:
+action: parse (convert INI to object) or stringify (convert object to INI).
+source (optional): Data to process (defaults to tag content).
+var (optional): Variable to store result.
+
+
+Examples:<!-- Parse INI to object -->
+<ini action="parse" var="config">[section]\nkey=value</ini>
+
+<!-- Stringify object to INI -->
+<store name="data" value="{'section': {'key': 'value'}}"></store>
+<ini action="stringify" source="data"></ini>
+
+
+
+<xml>
+Parses or stringifies XML data.
+
+Attributes:
+action: parse (convert XML to object) or stringify (convert object to XML).
+source (optional): Data to process (defaults to tag content).
+var (optional): Variable to store result.
+
+
+Examples:<!-- Parse XML to object -->
+<xml action="parse" var="obj"><root><item>text</item></root></xml>
+
+<!-- Stringify object to XML -->
+<store name="data" value="{'name': 'root', 'children': [{'name': 'item', 'text': 'text'}]}"></store>
+<xml action="stringify" source="data"></xml>
+
+
+
+<yml> or <yaml>
+Parses or stringifies YAML data.
+
+Attributes:
+action: parse (convert YAML to object) or stringify (convert object to YAML).
+source (optional): Data to process (defaults to tag content).
+var (optional): Variable to store result.
+
+
+Examples:<!-- Parse YAML to object -->
+<yml action="parse" var="obj">key: value\nlist:\n  - item1</yml>
+
+<!-- Stringify object to YAML -->
+<store name="data" value="{'key': 'value', 'list': ['item1']}"></store>
+<yaml action="stringify" source="data"></yaml>
+
+
+
+<http>
+Sends HTTP requests.
+
+Attributes:
+method: HTTP method (e.g., GET, POST).
+url: Request URL.
+headers (optional): Headers object.
+body (optional): Request body.
+var (optional): Variable to store response.
+
+
+Example:<http method="GET" url="https://api.example.com/data" var="response"></http>
+<output expression="response"></output>
+
+
+
+Notes
+
+Output: If var is not provided, results are displayed as text in the tag's place.
+Errors: Invalid data or actions set { error: "message" } in var or display an error message.
+Security: Avoid untrusted input in source or body to prevent code execution risks.
+Async: <http> is asynchronous; use with <try>/<catch> for error handling.
+
+Example
+<store name="data" value="[{'name': 'Alice'}, {'name': 'Bob'}]"></store>
+<csv action="stringify" source="data" var="csvData"></csv>
+<output expression="csvData"></output>
+<http method="GET" url="https://api.example.com" var="apiData"></http>
+<json action="parse" source="apiData" var="obj"></json>
